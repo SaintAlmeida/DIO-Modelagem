@@ -1,0 +1,98 @@
+# Projeto de Modelagem Lógica de Banco de Dados - E-commerce
+
+Este documento apresenta a modelagem lógica para um sistema de e-commerce, contemplando as principais entidades, seus atributos e relacionamentos.
+
+---
+
+## Entidades e Atributos
+
+### 1. Cliente
+- **ClienteID** (PK)
+- Nome
+- Email
+- Senha
+- Telefone
+- EndereçoID (FK)
+
+### 2. Endereço
+- **EndereçoID** (PK)
+- Rua
+- Número
+- Complemento
+- Bairro
+- Cidade
+- Estado
+- CEP
+- País
+
+### 3. Produto
+- **ProdutoID** (PK)
+- Nome
+- Descrição
+- Preço
+- Estoque
+- CategoriaID (FK)
+
+### 4. Categoria
+- **CategoriaID** (PK)
+- Nome
+- Descrição
+
+### 5. Pedido
+- **PedidoID** (PK)
+- ClienteID (FK)
+- DataPedido
+- Status
+- ValorTotal
+
+### 6. ItemPedido
+- **ItemPedidoID** (PK)
+- PedidoID (FK)
+- ProdutoID (FK)
+- Quantidade
+- PreçoUnitário
+- Subtotal
+
+### 7. Pagamento
+- **PagamentoID** (PK)
+- PedidoID (FK)
+- TipoPagamento (ex: Cartão, Boleto, Pix)
+- DataPagamento
+- ValorPago
+- StatusPagamento
+
+### 8. Fornecedor
+- **FornecedorID** (PK)
+- Nome
+- Telefone
+- Email
+- EndereçoID (FK)
+
+### 9. Estoque
+- **EstoqueID** (PK)
+- ProdutoID (FK)
+- QuantidadeDisponivel
+- DataAtualizacao
+
+---
+
+## Relacionamentos
+
+- Um **Cliente** pode ter vários **Pedidos**.
+- Um **Pedido** possui um ou mais **ItensPedido**.
+- Cada **ItemPedido** está associado a um único **Produto**.
+- Cada **Produto** pertence a uma **Categoria**.
+- Um **Pedido** possui um **Pagamento** associado.
+- Um **Fornecedor** pode fornecer vários **Produtos**.
+- Um **Cliente** e um **Fornecedor** possuem um **Endereço** (um para muitos ou um para um).
+
+---
+
+## Diagrama Relacional Simplificado
+
+```plaintext
+[Cliente] 1 --- N [Pedido] 1 --- N [ItemPedido] N --- 1 [Produto] N --- 1 [Categoria]
+[Pedido] 1 --- 1 [Pagamento]
+[Fornecedor] 1 --- N [Produto]
+[Cliente] N --- 1 [Endereço]
+[Fornecedor] N --- 1 [Endereço]
